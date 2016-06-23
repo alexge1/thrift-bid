@@ -1,0 +1,47 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  description: MyString
+  price: 1.5
+  dead: false
+  deadline: 2016-06-23 15:05:58
+  dress: false
+  pant: false
+  shirt: false
+  jacket: false
+  sweater: false
+  top: false
+  male: false
+  female: false
+  unisex: false
+  xxs: false
+  xs: false
+  s: false
+  m: false
+  l: false
+  xl: false
+  xxl: false
+  surprise: false
+
+two:
+  description: MyString
+  price: 1.5
+  dead: false
+  deadline: 2016-06-23 15:05:58
+  dress: false
+  pant: false
+  shirt: false
+  jacket: false
+  sweater: false
+  top: false
+  male: false
+  female: false
+  unisex: false
+  xxs: false
+  xs: false
+  s: false
+  m: false
+  l: false
+  xl: false
+  xxl: false
+  surprise: false
