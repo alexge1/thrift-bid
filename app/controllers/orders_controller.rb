@@ -11,7 +11,7 @@ class OrdersController < ApplicationController
 			end
 			render json: to_render
 		else
-			render json: {"message":"user invalid"}
+			render json: {"message":"user invalid"}, status:403
 		end
 	end
 
@@ -19,19 +19,19 @@ class OrdersController < ApplicationController
 	def get_order
 		uid = request.headers["uid"]
 		if !User.check_user(uid)
-			render json: {"message":"invalid user"}
+			render json: {"message":"invalid user"}, status:403
 			return
 		end
 		iid = params[:id]
 		if !Item.check_item(iid)
-			render json: {"message":"invalid order"}
+			render json: {"message":"invalid order"}, status:403
 			return
 		end
 		user = User.find(id:uid)
 		item = Item.find(id:iid)
 		if User.orders.exists?(item:item)
 			order = User.orders.find(item:item)
-			size_hash = {"xxs": item.XXS, "xs": item.XS, "s": item.S, "m": item.M, "l": item.L, "xl": item.XL,"xxl": item.XXL}
+			size_hash = {"xxs": item.xxs, "xs": item.xs, "s": item.s, "m": item.m, "l": item.l, "xl": item.xl,"xxl": item.xxl}
 	        gender_hash = {"male": item.male, "female": item.female, "unisex": item.unisex}
 	        tags_hash = {"dress": item.dress, "pant": item.pant,"shirt": item.shirt,"jacket": item.jacket,"sweater": item.sweater,"top": item.top}
 	        preference_hash = {"tags": tags_hash,"sizes": size_hash, "gender": gender_hash, "surprise": item.surprise}
@@ -39,7 +39,7 @@ class OrdersController < ApplicationController
 	  		render json: to_render
   			return
 		else
-			render json: {"message":"could not find your order"}
+			render json: {"message":"could not find your order"}, status:403
 			return
 		end
 	end

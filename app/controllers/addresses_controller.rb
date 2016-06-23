@@ -4,7 +4,7 @@ class AddressesController < ApplicationController
 	def shipping
 		uid = request.headers["uid"]
 		if !User.check_user(uid)
-			render json: {"message":"invalid user"}
+			render json: {"message":"invalid user"}, status:403
 			return
 		end
 		user = User.find(uid)
@@ -15,7 +15,7 @@ class AddressesController < ApplicationController
 	def billing
 		uid = request.headers["uid"]
 		if !User.check_user(uid)
-			render json: {"message":"invalid user"}
+			render json: {"message":"invalid user"}, status:403
 			return
 		end
 		user = User.find(uid)
@@ -26,18 +26,18 @@ class AddressesController < ApplicationController
 	def one_shipping
 		uid = request.headers["uid"]
 		if !User.check_user(uid)
-			render json: {"message":"invalid user"}
+			render json: {"message":"invalid user"}, status:403
 			return
 		end
 		user = User.find(uid)
 		aid = params[:id]
 		if aid == nil || aid == "" || !Address.exists?(id:aid,user:user)
-			render json: {"message":"address not found"}
+			render json: {"message":"address not found"}, status:403
 			return
 		end
 		address = Address.find(aid)
 		if address.ship_address != true
-			render json: {"message":"address not found"}
+			render json: {"message":"address not found"}, status:403
 			return
 		end
 		render json: address
@@ -46,18 +46,18 @@ class AddressesController < ApplicationController
 	def one_billing
 		uid = request.headers["uid"]
 		if !User.check_user(uid)
-			render json: {"message":"invalid user"}
+			render json: {"message":"invalid user"}, status:403
 			return
 		end
 		user = User.find(uid)
 		aid = params[:id]
 		if aid == nil || aid == "" || !Address.exists?(id:aid,user:user)
-			render json: {"message":"address not found"}
+			render json: {"message":"address not found"}, status:403
 			return
 		end
 		address = Address.find(aid)
 		if address.bill_address != true
-			render json: {"message":"address not found"}
+			render json: {"message":"address not found"}, status:403
 			return
 		end
 		render json: address
@@ -67,22 +67,22 @@ class AddressesController < ApplicationController
 	def new_shipping
 		uid = request.headers["uid"]
 		if !User.check_user(uid)
-			render json: {"message":"invalid user"}
+			render json: {"message":"invalid user"}, status:403
 			return
 		end
 		user = User.find(uid)
-		address = Address.create(user:user,recipient:params[:recipient],line_1:params[:line1],line_2:params[:line2],city:params[:city],state:params[:state],zip:params[:zip],ship_address:true, bill_address:false)
+		address = Address.create(user:user,recipient:params[:recipient],line_1:params[:line1],line_2:params[:line2],city:params[:city],state:params[:state],zip_code:params[:zip_code],ship_address:true, bill_address:false)
 		render json: address
 	end
 
 	def new_billing
 		uid = request.headers["uid"]
 		if !User.check_user(uid)
-			render json: {"message":"invalid user"}
+			render json: {"message":"invalid user"}, status:403
 			return
 		end
 		user = User.find(uid)
-		address = Address.create(user:user,recipient:params[:recipient],line_1:params[:line1],line_2:params[:line2],city:params[:city],state:params[:state],zip:params[:zip],bill_address:true, ship_address:false)
+		address = Address.create(user:user,recipient:params[:recipient],line_1:params[:line1],line_2:params[:line2],city:params[:city],state:params[:state],zip_code:params[:zip_code],bill_address:true, ship_address:false)
 		render json: address
 	end
 

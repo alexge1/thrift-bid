@@ -30,7 +30,8 @@ class Bid < ActiveRecord::Base
 						return {"message":"outdated bid, please refresh"}
 					end
 					#if no problems set old bid to no longer highest
-					item.bids.last.update(highest_bid:false)
+					item.bids.last.highest_bid = false
+					item.bids.last.save
 				#if this will be first bid on item, then item price = bid price
 				#check only if its outdate by being higher
 				else
@@ -43,7 +44,8 @@ class Bid < ActiveRecord::Base
 				end
 				#create new bid as the highest
 				bid = Bid.create(user:user,item:item,bid_amount:new_bid_price,highest_bid:true)
-				item.update(price: bid.bid_amount)
+				item.price = bid.bid_amount
+				item.save
 				size_hash = {"xxs": item.xxs, "xs": item.xs, "s": item.s, "m": item.m, "l": item.l, "xl": item.xl,"xxl": item.xxl}
 		        gender_hash = {"male": item.male, "female": item.female, "unisex": item.unisex}
 		        tags_hash = {"dress": item.dress, "pant": item.pant,"shirt": item.shirt,"jacket": item.jacket,"sweater": item.sweater,"top": item.top}
@@ -74,7 +76,8 @@ class Bid < ActiveRecord::Base
 					return {"message":"outdated bid, please refresh"}
 				end
 				#if no problems, set old bid to no longer highest
-				item.bids.last.update(highest_bid:false)
+				item.bids.last.highest_bid = false
+				item.bids.last.save
 			#if this will be first bid on item, then item price = bid price
 			#check only if its outdate by being higher
 			else
@@ -82,11 +85,13 @@ class Bid < ActiveRecord::Base
 					return {"message":"outdated bid, please refresh"}
 				end
 				#first bid, start the countdown clock for the item
-				item.update(deadline:Time.current.tomorrow())
+				item.deadline = Time.current.tomorrow
+				item.save
 			end
 			#create new bid as the highest
 			bid = Bid.create(user:user,item:item,bid_amount:new_bid_price,highest_bid:true)
-			item.update(price: bid.bid_amount)
+			item.price = bid.bid_amount
+			item.save
 			size_hash = {"xxs": item.xxs, "xs": item.xs, "s": item.s, "m": item.m, "l": item.l, "xl": item.xl,"xxl": item.xxl}
 	        gender_hash = {"male": item.male, "female": item.female, "unisex": item.unisex}
 	        tags_hash = {"dress": item.dress, "pant": item.pant,"shirt": item.shirt,"jacket": item.jacket,"sweater": item.sweater,"top": item.top}

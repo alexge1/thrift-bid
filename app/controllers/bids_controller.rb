@@ -4,25 +4,30 @@ class BidsController < ApplicationController
 		
 		uid = request.headers["uid"]
 		if !User.check_user(uid)
-			render json: {"message":"invalid user"}
+			render json: {"message":"invalid user"}, status:403
 			return
 		end
 		iid = params[:item_id]
 		if Item.check_item(iid)
 			item = Item.find(iid)
 			if item.check_dead
-				render json: {"message":"sorry, item offline!"}
+				render json: {"message":"sorry, item offline!"}, status:403
 				return
 			end
 		else
-			render json: {"message":"invalid item"}
+			render json: {"message":"invalid item"}, status:403
 			return
 		end
 		new_bid_price = params[:new_bid_price].to_f
 		if new_bid_price != nil
-			render json: Bid.create_super_bid(uid,iid,new_bid_price)
+			temp_bid = Bid.create_super_bid(uid,iid,new_bid_price)
+			if temp_bid.is_a? Bid
+				render json: temp_bid
+			else
+				render json: temp_bid, status:403
+			end
 		else
-			render json: {"message":"no bid price provided"}
+			render json: {"message":"no bid price provided"}, status:403
 		end
 
 	end
@@ -32,25 +37,30 @@ class BidsController < ApplicationController
 		
 		uid = request.headers["uid"]
 		if !User.check_user(uid)
-			render json: {"message":"invalid user"}
+			render json: {"message":"invalid user"}, status:403
 			return
 		end
 		iid = params[:item_id]
 		if Item.check_item(iid)
 			item = Item.find(iid)
 			if item.dead
-				render json: {"message":"sorry, item offline!"}
+				render json: {"message":"sorry, item offline!"}, status:403
 				return
 			end
 		else
-			render json: {"message":"invalid item"}
+			render json: {"message":"invalid item"}, status:403
 			return
 		end
 		new_bid_price = params[:new_bid_price].to_f
 		if new_bid_price != nil
-			render json: Bid.create_normal_bid(uid,iid,new_bid_price)
+			temp_bid = Bid.create_super_bid(uid,iid,new_bid_price)
+			if temp_bid.is_a? Bid
+				render json: temp_bid
+			else
+				render json: temp_bid, status:403
+			end
 		else
-			render json: {"message":"no bid price provided"}
+			render json: {"message":"no bid price provided"}, status:403
 		end
 
 	end

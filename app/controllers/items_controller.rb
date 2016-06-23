@@ -10,7 +10,7 @@ class ItemsController < ApplicationController
   def render_next_items
   	uid = request.headers["uid"]
     if !User.check_user(uid)
-  		render json: {"message":"no current user"}
+  		render json: {"message":"no current user"}, status:403
   		return
   	else
   		user = User.find(uid)
@@ -23,7 +23,7 @@ class ItemsController < ApplicationController
 				end
 				render json: dict
 			else
-				render json: {"message":"no unviewed items"}
+				render json: {"message":"no unviewed items"}, status:403
 			end
     end
   end
@@ -33,13 +33,13 @@ class ItemsController < ApplicationController
     # check for valid user
     uid = request.headers["uid"]
     if !User.check_user(uid)
-      render json: {"message":"invalid user"}
+      render json: {"message":"invalid user"}, status:403
       return
     else
       # check for valid item id
       iid = params[:id]
       if !Item.check_item(iid)
-        render json: {"message":"invalid item id"}
+        render json: {"message":"invalid item id"}, status:403
         return
       else
         item = Item.find(iid)

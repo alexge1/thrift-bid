@@ -57,7 +57,8 @@ class Item < ActiveRecord::Base
 		end
 		if self.deadline != nil
 			if self.deadline.past?()
-				self.update(dead:true)
+				self.dead = true
+				self.save
 				last_bid = self.bids.last 
 				Order.create(item:self,user:last_bid.user)
 				return true

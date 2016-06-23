@@ -4,11 +4,11 @@ class Payment < ActiveRecord::Base
 
 	validates :user, presence: true
 	validates :cardholder, presence: true
-    validates :card_number, presence: true
-    validates :CVV, presence: true
+    validates :cardnumber, presence: true
+    validates :cvv, presence: true
     validates :provider, presence: true
-    validates :expire_month, presence: true
-    validates :expire_year, presence: true
+    validates :month, presence: true
+    validates :year, presence: true
 
 
 

@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  # parameters: first_name, last_name, email, password
+  # parameters: fname, lname, email, password
   post 'user/register', to: 'users#new'
   
   # parameters: email, password
@@ -50,7 +50,7 @@ Rails.application.routes.draw do
   get 'addresses/id_bill/:id', to: 'addresses#one_billing'
   
   # header: uid
-  # parameters: recipient, line1, (line2), city, state, zip
+  # parameters: recipient, line1, (line2), city, state, zip_code
   post 'address/ship/create', to: 'addresses#new_shipping'
   post 'address/bill/create', to: 'addresses#new_billing'
   

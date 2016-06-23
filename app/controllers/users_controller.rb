@@ -5,7 +5,7 @@ class UsersController < ApplicationController
 		if newuser.errors.as_json == [] || newuser.errors.as_json == "" || newuser.errors.as_json == nil || newuser.errors.as_json == {}
 			render json: newuser
 		else
-			render json: newuser.errors
+			render json: {"message":"failed"}, status:403
 		end
 	end
 
@@ -17,19 +17,74 @@ class UsersController < ApplicationController
 					render json: user
 					return
 				else
-					render json: {"message":"incorrect password"}
+					render json: {"message":"incorrect password"}, status:403
 					return
 				end
 			end
 		end
-		render json: {"message":"no user found"}
+		render json: {"message":"no user found"}, status: 403
 
 	end
 
 
 	def update
 
+		uid = request.headers["uid"]
+		if !User.check_user(uid)
+			render json: {"message":"invalid user"}, status:403
+			return
+		else
+			user = User.find(uid)
+			user.dress = params[:dress]
+			user.pant = params[:pant]
+			user.shirt = params[:shirt]
+			user.jacket = params[:jacket]
+			user.sweater = params[:sweater]
+			user.top = params[:top]
+			user.male = params[:male]
+			user.female = params[:female]
+			user.unisex = params[:unisex]
+			user.xxs = params[:xxs]
+			user.xs = params[:xs]
+			user.s = params[:s]
+			user.m = params[:m]
+			user.l = params[:l]
+			user.xl = params[:xl]
+			user.xxl = params[:xxl]
+			user.surprise = params[:surpise]
+			user.save
+
+			render json: user
+		end
+
+
 	end
 
 
+	def self.check_preferences(user,item)
+
+	end
+
+
+
 end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
