@@ -27,10 +27,10 @@ class OrdersController < ApplicationController
 			render json: {"message":"invalid order"}, status:403
 			return
 		end
-		user = User.find(id:uid)
-		item = Item.find(id:iid)
-		if User.orders.exists?(item:item)
-			order = User.orders.find(item:item)
+		user = User.find(uid)
+		item = Item.find(iid)
+		if user.orders.exists?(item:iid)
+			order = user.orders.find_by(item:item)
 			size_hash = {"xxs": item.xxs, "xs": item.xs, "s": item.s, "m": item.m, "l": item.l, "xl": item.xl,"xxl": item.xxl}
 	        gender_hash = {"male": item.male, "female": item.female, "unisex": item.unisex}
 	        tags_hash = {"dress": item.dress, "pant": item.pant,"shirt": item.shirt,"jacket": item.jacket,"sweater": item.sweater,"top": item.top}

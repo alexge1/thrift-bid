@@ -46,8 +46,8 @@ Rails.application.routes.draw do
   
   # header: uid
   # url-parameter: :id (address)
-  get 'addresses/id_ship/:id', to: 'addresses#one_shipping'
-  get 'addresses/id_bill/:id', to: 'addresses#one_billing'
+  get 'address/id_ship/:id', to: 'addresses#one_shipping'
+  get 'address/id_bill/:id', to: 'addresses#one_billing'
   
   # header: uid
   # parameters: recipient, line1, (line2), city, state, zip_code

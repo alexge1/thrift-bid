@@ -54,7 +54,7 @@ class BidsController < ApplicationController
 		new_bid_price = params[:new_bid_price].to_f
 		if new_bid_price != nil
 			temp_item = Bid.create_normal_bid(uid,iid,new_bid_price)
-			if temp_item.is_a? Item
+			if temp_item[:message] == nil
 				render json: temp_item
 			else
 				render json: temp_item, status:403
