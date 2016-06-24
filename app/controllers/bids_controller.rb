@@ -20,11 +20,11 @@ class BidsController < ApplicationController
 		end
 		new_bid_price = params[:new_bid_price].to_f
 		if new_bid_price != nil
-			temp_bid = Bid.create_super_bid(uid,iid,new_bid_price)
-			if temp_bid.is_a? Bid
-				render json: temp_bid
+			temp_item = Bid.create_super_bid(uid,iid,new_bid_price)
+			if temp_item.is_a? Item
+				render json: temp_item
 			else
-				render json: temp_bid, status:403
+				render json: temp_item, status:403
 			end
 		else
 			render json: {"message":"no bid price provided"}, status:403
@@ -53,11 +53,11 @@ class BidsController < ApplicationController
 		end
 		new_bid_price = params[:new_bid_price].to_f
 		if new_bid_price != nil
-			temp_bid = Bid.create_super_bid(uid,iid,new_bid_price)
-			if temp_bid.is_a? Bid
-				render json: temp_bid
+			temp_item = Bid.create_normal_bid(uid,iid,new_bid_price)
+			if temp_item.is_a? Item
+				render json: temp_item
 			else
-				render json: temp_bid, status:403
+				render json: temp_item, status:403
 			end
 		else
 			render json: {"message":"no bid price provided"}, status:403
