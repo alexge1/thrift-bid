@@ -2,10 +2,25 @@ class UsersController < ApplicationController
 
 	def new
 		newuser = User.create(fname:params[:fname],lname:params[:lname],email:params[:email],password:params[:password],dress:false,pant:false,shirt:false,jacket:false,sweater:false,top:false,xxs:false,xs:false,s:false,m:false,l:false,xl:false,xxl:false,male:false,female:false,unisex:false,surprise:false)
-		if newuser.errors.as_json == [] || newuser.errors.as_json == "" || newuser.errors.as_json == nil || newuser.errors.as_json == {}
+		if newuser.errors.as_json == {}
 			render json: newuser
 		else
-			render json: {"message":"failed"}, status:403
+			#keys = newuser.keys
+			e_message = ""
+			count = 0
+			x = newuser.errors.full_messages.join(", ")
+
+			# newuser.errors.each do |error|
+			# 	if e_message == ""
+			# 		e_message = "#{newuser.errors.values[count].to_s}"
+			# 		count += 1
+			# 	else
+			# 		e_message = e_message + ", #{newuser.errors.values[count].to_s}"
+			# 		count += 1
+			# 	end
+			# end
+			to_render = {"message":x}
+			render json: to_render , status 403 #{"message":"failed"}, status:403
 		end
 	end
 

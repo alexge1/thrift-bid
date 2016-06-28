@@ -2,11 +2,11 @@ class User < ActiveRecord::Base
 
 
 	#validations
-	validates :fname, presence: true
-	validates :lname, presence: true
-	validates :email, presence: true
-	validates :password, presence: true
-	validates :email, uniqueness: true
+	validates :fname, presence: true#, message: "Missing first name"
+	validates :lname, presence: true#, message: "Missing last name"
+	validates :email, presence: true#, message: "Missing email"
+	validates :password, presence: true#, message: "Missing password"
+	validates :email, uniqueness: true#, message: "Email already taken"
 
 	has_many :bids
 	has_many :bidded_items, through: :bids, source: "item"
